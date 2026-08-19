@@ -5,7 +5,7 @@
 /* Dark mode: class-based */
 @custom-variant dark (&:where(.dark, .dark *));
 
-@theme {
+@theme inline {
     /*
   |--------------------------------------------------------------------------
   | Fonts
@@ -319,19 +319,19 @@
     }
 
     .book-cover_small {
-        @apply h-[76px] w-[55px];
+        @apply h-19 w-13.75;
     }
 
     .book-cover_medium {
-        @apply h-[199px] w-[144px];
+        @apply h-49.75 w-36;
     }
 
     .book-cover_regular {
-        @apply h-[169px] w-[114px] xs:h-[239px] xs:w-[174px];
+        @apply h-42.25 w-28.5 xs:h-59.75 xs:w-43.5;
     }
 
     .book-cover_wide {
-        @apply h-[354px] w-[256px] xs:h-[404px] xs:w-[296px];
+        @apply h-88.5 w-[256px] xs:h-101 xs:w-74;
     }
 
     /* Book List */
@@ -407,7 +407,7 @@
     /* Book Ticket */
 
     #book-ticket {
-        @apply relative mt-10 hidden w-[544px] overflow-hidden bg-dark-300 py-8;
+        @apply relative mt-10 hidden w-136 overflow-hidden bg-dark-300 py-8;
     }
 
     #book-ticket #book-details div {
@@ -445,11 +445,11 @@
     }
 
     #not-found p {
-        @apply mt-1 w-[360px] text-light-100;
+        @apply mt-1 w-90 text-light-100;
     }
 
     .not-found-btn {
-        @apply mt-6 min-h-12 min-w-[360px] bg-primary font-bebas-neue text-xl text-dark-100 hover:bg-primary/90!;
+        @apply mt-6 min-h-12 min-w-90 bg-primary font-bebas-neue text-xl text-dark-100 hover:bg-primary/90!;
     }
 
     /* Pagination */
