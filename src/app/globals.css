@@ -281,7 +281,7 @@
     }
 
     .form-input {
-        @apply min-h-14 w-full border-none bg-dark-300 text-base font-bold text-white placeholder:font-normal placeholder:text-light-100 focus-visible:ring-0 focus-visible:shadow-none!;
+        @apply min-h-14 w-full border-none bg-dark-300! text-base font-bold text-white placeholder:font-normal placeholder:text-light-100 focus-visible:ring-0 focus-visible:shadow-none!;
     }
 
     /* Book Card */
