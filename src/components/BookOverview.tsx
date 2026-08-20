@@ -3,6 +3,7 @@ import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import Image from "next/image";
 import { BookCover } from "./BookCover";
+import { BorrowBook } from "./BorrowBook";
 
 interface Props extends Book {
     userId: string;
@@ -76,6 +77,14 @@ export const BookOverview = async ({
                 </div>
 
                 <p className="book-description">{description}</p>
+
+                {user && (
+                    <BorrowBook
+                        bookId={id}
+                        userId={userId}
+                        borrowingEligibility={borrowingEligibility}
+                    />
+                )}
             </div>
 
             <div className="relative flex flex-1 justify-center">
