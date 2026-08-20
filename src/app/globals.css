@@ -368,6 +368,7 @@
 
     .book-description {
         @apply mt-2 text-justify text-xl text-light-100;
+        overflow-wrap: anywhere;
     }
 
     .book-overview_btn {

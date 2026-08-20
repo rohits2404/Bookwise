@@ -147,11 +147,10 @@ export const FileUpload = ({
                 throw new Error("ImageKit Did Not Return a File Path.");
             }
 
-            setFile({
-                filePath: response.filePath,
-            });
+            const imageUrl = `${urlEndpoint}${response.filePath}`;
 
-            onFileChange(response.filePath);
+            setFile({ filePath: imageUrl });
+            onFileChange(imageUrl);
 
             toast.success(`${type} Uploaded Successfully`);
         } catch (error) {

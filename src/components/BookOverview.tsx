@@ -1,9 +1,14 @@
+import { db } from "@/db";
+import { users } from "@/db/schema";
+import { eq } from "drizzle-orm";
 import Image from "next/image";
-import { Button } from "./ui/button";
 import { BookCover } from "./BookCover";
 
-export const BookOverview = ({
-    id,
+interface Props extends Book {
+    userId: string;
+}
+
+export const BookOverview = async ({
     title,
     author,
     genre,
@@ -13,13 +18,27 @@ export const BookOverview = ({
     description,
     coverColor,
     coverUrl,
-    videoUrl,
-    summary,
-}: Book) => {
+    id,
+    userId,
+}: Props) => {
+    const [user] = await db
+        .select()
+        .from(users)
+        .where(eq(users.id, userId))
+        .limit(1);
+
+    const borrowingEligibility = {
+        isEligible: availableCopies > 0 && user?.status === "APPROVED",
+        message:
+            availableCopies <= 0
+                ? "Book is not available"
+                : "You are not eligible to borrow this book",
+    };
     return (
         <section className="book-overview">
-            <div className="flex flex-1 flex-col gap-5">
+            <div className="flex min-w-0 flex-1 flex-col gap-5">
                 <h1>{title}</h1>
+
                 <div className="book-info">
                     <p>
                         By{" "}
@@ -45,6 +64,7 @@ export const BookOverview = ({
                         <p>{rating}</p>
                     </div>
                 </div>
+
                 <div className="book-copies">
                     <p>
                         Total Books <span>{totalCopies}</span>
@@ -56,18 +76,8 @@ export const BookOverview = ({
                 </div>
 
                 <p className="book-description">{description}</p>
-                <Button className="book-overview_btn">
-                    <Image
-                        src={"/icons/book.svg"}
-                        alt="book"
-                        width={20}
-                        height={20}
-                    />
-                    <p className="font-bebas-neue text-xl text-dark-100">
-                        Borrow
-                    </p>
-                </Button>
             </div>
+
             <div className="relative flex flex-1 justify-center">
                 <div className="relative">
                     <BookCover

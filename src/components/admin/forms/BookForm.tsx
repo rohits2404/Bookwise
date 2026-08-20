@@ -17,12 +17,17 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { ColorPicker } from "../ColorPicker";
+import { createBook } from "@/lib/admin/actions/book";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 interface Props extends Partial<Book> {
     type?: "create" | "update";
 }
 
 export const BookForm = ({ type, ...book }: Props) => {
+    const router = useRouter();
+
     const form = useForm<
         z.input<typeof bookSchema>,
         any,
@@ -43,8 +48,16 @@ export const BookForm = ({ type, ...book }: Props) => {
         },
     });
 
-    const onSubmit = async (values: z.output<typeof bookSchema>) => {
-        // values.rating and values.totalCopies are guaranteed `number` here
+    const onSubmit = async (values: z.infer<typeof bookSchema>) => {
+        const result = await createBook(values);
+
+        if (result.success) {
+            toast.success("Book Created Successfully");
+
+            router.push(`/admin/books/${result.data.id}`);
+        } else {
+            toast.error(result.message);
+        }
     };
 
     return (
