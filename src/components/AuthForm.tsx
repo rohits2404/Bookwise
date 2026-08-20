@@ -23,9 +23,10 @@ import { Input } from "./ui/input";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { FileUpload } from "./FileUpload";
+import { toast } from "sonner";
 
 interface Props<T extends FieldValues> {
-    schema: ZodType<T, T>;
+    schema: ZodType<T, any>;
     defaultValues: T;
     onSubmit: (data: T) => Promise<{ success: boolean; error?: string }>;
     type: "SIGN_IN" | "SIGN_UP";
@@ -46,7 +47,19 @@ export const AuthForm = <T extends FieldValues>({
         defaultValues: defaultValues as DefaultValues<T>,
     });
 
-    const handleSubmit: SubmitHandler<T> = async (data) => {};
+    const handleSubmit: SubmitHandler<T> = async (data) => {
+        const result = await onSubmit(data);
+
+        if (result.success) {
+            toast.success(
+                isSignIn ? "Login Successful" : "Registration Successful",
+            );
+
+            router.push("/");
+        } else {
+            toast.error(`Error ${isSignIn ? "Signing In" : "Signing Up"}`);
+        }
+    };
 
     return (
         <div className="flex flex-col gap-4">
